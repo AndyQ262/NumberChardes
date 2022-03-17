@@ -8,17 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import java.util.Random;
 
 import org.w3c.dom.Text;
 
 public class PlayArea extends AppCompatActivity {
     int count = 59;
     int score = 0;
-    int buttonValue1 = 1;
-    int buttonValue2 = 0;
-    int buttonValue3 = 0;
-    int buttonValue4 = 0;
-    int corretValue = 1;
+    int correctValue = 1;
+
+    int[] buttonValueArray = {0,0,0,0};
 
     private TextView countdown;
     private TextView guess;
@@ -33,6 +32,7 @@ public class PlayArea extends AppCompatActivity {
     private Button playAreaButton4;
     private Button hintMenuButton;
 
+    final Random random = new Random();
 
     Thread thread = null;
 
@@ -67,7 +67,6 @@ public class PlayArea extends AppCompatActivity {
                             public void run() {
                                 countdown.setText(String.valueOf(count));
                                 count--;
-
                             }
                         });
 
@@ -79,34 +78,34 @@ public class PlayArea extends AppCompatActivity {
                         playAreaButton1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //count+= 5;
-                                //increment.setText("+5");
-                                //increment.setTextColor(Color.parseColor("#32CD32"));
-                                //increment.setVisibility(view.VISIBLE);
-                                //guess.setText("Guess");
-                                //playAreaButton1.setText("69");
-                                checker(buttonValue1);
+                                checker(buttonValueArray[0]);
+                                generate();
                             }
                         });
 
                         playAreaButton2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                checker(buttonValue2);
+                                checker(buttonValueArray[1]);
+                                generate();
                             }
                         });
 
                         playAreaButton3.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                checker(buttonValue3);
+                                checker(buttonValueArray[2]);
+                                generate();
+
                             }
                         });
 
                         playAreaButton4.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                checker(buttonValue4);
+                                checker(buttonValueArray[3]);
+                                generate();
+
                             }
                         });
 
@@ -125,18 +124,43 @@ public class PlayArea extends AppCompatActivity {
                 }
             }
         };
+        generate();
         thread.start();
+    }
+
+    public void generate(){
+        if (count >= 5){
+            int lowerBound = random.nextInt(0 + 100) - 100;
+            int upperBound = random.nextInt(100 - 0) + 0;
+            int correctIndex = random.nextInt(3);
+
+            for(int i = 0; i < 4; i++){
+                buttonValueArray[i] = random.nextInt(upperBound-lowerBound)+lowerBound;
+            }
+            //correctValue = buttonValueArray[correctIndex];
+            correctValue = buttonValueArray[0];
+
+            playAreaButton1.setText(String.valueOf(buttonValueArray[0]));
+            guess.setText(String.format("Guess the number between %d and %d", lowerBound, upperBound));
+            playAreaButton2.setText(String.valueOf(buttonValueArray[1]));
+            playAreaButton3.setText(String.valueOf(buttonValueArray[2]));
+            playAreaButton4.setText(String.valueOf(buttonValueArray[3]));
+
+        }else{
+            guess.setText("Game Over");
+        }
+
     }
 
 
     public void checker(int buttonValue){
-        if(buttonValue == corretValue){
+        if(buttonValue == correctValue){
             count+= 6;
             score++;
             increment.setText("+5");
             increment.setTextColor(Color.parseColor("#32CD32"));
             increment.setVisibility(View.VISIBLE);
-            correctIncorrect.setText(String.format("Correct: The number is %d", corretValue));
+            correctIncorrect.setText(String.format("Correct: The number is %d", correctValue));
             correctIncorrect.setVisibility(View.VISIBLE);
         }else{
             if(count<=5){
@@ -149,7 +173,7 @@ public class PlayArea extends AppCompatActivity {
                 increment.setText("-5");
                 increment.setTextColor(Color.parseColor("#FF0000"));
                 increment.setVisibility(View.VISIBLE);
-                correctIncorrect.setText(String.format("Incorrect: The number is %d", corretValue));
+                correctIncorrect.setText(String.format("Incorrect: The number is %d", correctValue));
                 correctIncorrect.setVisibility(View.VISIBLE);
             }
         }
