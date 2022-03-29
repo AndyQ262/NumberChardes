@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class StartGame extends AppCompatActivity {
+    public static final String EXTRA_NUM = "com.example.numbercharades.EXTRA_NUM";
     private Button StartGameButtonEasy;
     private Button StartGameButtonMedium;
     private Button StartGameButtonHard;
@@ -44,8 +45,8 @@ public class StartGame extends AppCompatActivity {
 
     }
     public void openPlayArea(int diffcultyNum){
-        diffcultyNum = diffcultyNum;
         Intent intentPlay = new Intent(this,PlayArea.class);
+        intentPlay.putExtra(EXTRA_NUM,diffcultyNum);
         startActivity(intentPlay);
 
     }
