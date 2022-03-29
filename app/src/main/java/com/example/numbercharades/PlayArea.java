@@ -9,18 +9,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import java.util.Random;
+import java.util.*;
 
 import org.w3c.dom.Text;
 
 public class PlayArea extends AppCompatActivity {
     int count = 59;
     int count2 = 5;
+    int count3 = 5;
     int score = 0;
     int correctValue = 1;
+    int amtHints = 3;
 
     int diffSet = 0;
 
-    int[] buttonValueArray = new int[4];
+    //int[] buttonValueArray = new int[4];
+    ArrayList<Integer> buttonValueList = new ArrayList<>();
 
     private TextView countdown;
     private TextView guess;
@@ -63,23 +67,23 @@ public class PlayArea extends AppCompatActivity {
         hintMenuButton = (Button) findViewById(R.id.button13);
 
         Intent intent = getIntent();
-        int diffSet = intent.getIntExtra(StartGame.EXTRA_NUM,0);
+        diffSet = intent.getIntExtra(StartGame.EXTRA_NUM,0);
 
         switch(diffSet){
             case 1:
-                buttonValueArray = new int[2];
+                buttonValueList = new ArrayList<>(Arrays.asList(0,0));
                 playAreaButton3.setVisibility(View.INVISIBLE);
                 playAreaButton4.setVisibility(View.INVISIBLE);
                 playAreaButton5.setVisibility(View.INVISIBLE);
                 playAreaButton6.setVisibility(View.INVISIBLE);
                 break;
             case 2:
-                buttonValueArray = new int[4];
+                buttonValueList = new ArrayList<>(Arrays.asList(0,0,0,0));
                 playAreaButton5.setVisibility(View.INVISIBLE);
                 playAreaButton6.setVisibility(View.INVISIBLE);
                 break;
             case 3:
-                buttonValueArray = new int[6];
+                buttonValueList = new ArrayList<>(Arrays.asList(0,0,0,0,0,0));
                 break;
         }
 
@@ -89,9 +93,12 @@ public class PlayArea extends AppCompatActivity {
             public void run(){
                 try{
                     while(!thread.isInterrupted() && count > 0){
-                        if(count2==0) {
+                        if(count2<=0) {
                             increment.setVisibility(View.INVISIBLE);
                             correctIncorrect.setVisibility(View.INVISIBLE);
+                        }
+                        if(count3<=0){
+                            hintDisplay.setVisibility(View.INVISIBLE);
                         }
 
                         Thread.sleep(1000);
@@ -101,6 +108,7 @@ public class PlayArea extends AppCompatActivity {
                                 countdown.setText(String.valueOf(count));
                                 count--;
                                 count2--;
+                                count3--;
                             }
                         });
 
@@ -110,7 +118,7 @@ public class PlayArea extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 count2 = 3;
-                                checker(buttonValueArray[0]);
+                                checker(buttonValueList.get(0));
                                 generate();
                             }
                         });
@@ -119,7 +127,7 @@ public class PlayArea extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 count2 = 3;
-                                checker(buttonValueArray[1]);
+                                checker(buttonValueList.get(1));
                                 generate();
                             }
                         });
@@ -128,7 +136,7 @@ public class PlayArea extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 count2 = 3;
-                                checker(buttonValueArray[2]);
+                                checker(buttonValueList.get(2));
                                 generate();
 
                             }
@@ -138,7 +146,7 @@ public class PlayArea extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 count2 = 3;
-                                checker(buttonValueArray[3]);
+                                checker(buttonValueList.get(3));
                                 generate();
 
                             }
@@ -148,7 +156,7 @@ public class PlayArea extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 count2 = 3;
-                                checker(buttonValueArray[4]);
+                                checker(buttonValueList.get(4));
                                 generate();
 
                             }
@@ -158,7 +166,7 @@ public class PlayArea extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 count2 = 3;
-                                checker(buttonValueArray[5]);
+                                checker(buttonValueList.get(5));
                                 generate();
 
                             }
@@ -187,24 +195,32 @@ public class PlayArea extends AppCompatActivity {
         if (count >= 5) {
             int lowerBound = random.nextInt(0 + 100) - 100;
             int upperBound = random.nextInt(100 - 0) + 0;
-            int correctIndex = random.nextInt(buttonValueArray.length );
+            int correctIndex = random.nextInt(buttonValueList.size());
 
-            for (int i = 0; i < buttonValueArray.length; i++) {
-                buttonValueArray[i] = random.nextInt(upperBound - lowerBound) + lowerBound;
+            for (int i = 0; i < buttonValueList.size(); i++) {
+                int tempRandInt = random.nextInt(upperBound - lowerBound) + lowerBound;
+                if(!buttonValueList.contains(tempRandInt)){
+                    buttonValueList.set(i,tempRandInt);
+                }else{
+                    i--;
+                }
             }
-            correctValue = buttonValueArray[correctIndex];
+            correctValue = buttonValueList.get(correctIndex);
 
             guess.setText(String.format("Guess the number between %d and %d", lowerBound, upperBound));
-            playAreaButton1.setText(String.valueOf(buttonValueArray[0]));
-            playAreaButton2.setText(String.valueOf(buttonValueArray[1]));
+            playAreaButton1.setText(String.valueOf(buttonValueList.get(0)));
+            playAreaButton2.setText(String.valueOf(buttonValueList.get(1)));
 
-        } else if(diffSet==2) {
-            playAreaButton3.setText(String.valueOf(buttonValueArray[2]));
-            playAreaButton4.setText(String.valueOf(buttonValueArray[3]));
-        }else if(diffSet==3){
-            playAreaButton3.setText(String.valueOf(buttonValueArray[4]));
-            playAreaButton4.setText(String.valueOf(buttonValueArray[5]));
-        } else{
+            if(diffSet==2) {
+                playAreaButton3.setText(String.valueOf(buttonValueList.get(2)));
+                playAreaButton4.setText(String.valueOf(buttonValueList.get(3)));
+            }else if(diffSet==3){
+                playAreaButton3.setText(String.valueOf(buttonValueList.get(2)));
+                playAreaButton4.setText(String.valueOf(buttonValueList.get(3)));
+                playAreaButton5.setText(String.valueOf(buttonValueList.get(4)));
+                playAreaButton6.setText(String.valueOf(buttonValueList.get(5)));
+            }
+        }else{
             guess.setText("Game Over");
         }
 
@@ -239,10 +255,44 @@ public class PlayArea extends AppCompatActivity {
     }
 
     public void hintOrMenu(){
-        if(count > 0){
-            hintDisplay.setText("69");
+        if(count > 0 && amtHints!= 0){
+            int randHint = random.nextInt(3);
+            int multiple = 0;
+            for(int i = 2; i<=7; i++) {
+                if (correctValue % i == 0) {
+                    multiple = i;
+                }
+            }
+            if(multiple == 0){
+                randHint = 3;
+            }
+            switch(randHint){
+                case 0:
+                    hintDisplay.setText(String.format("The correct number is divisible by %d",multiple));
+                    break;
+                case 1:
+                    hintDisplay.setText(String.format("The correct number is a multiple of %d",multiple));
+                    break;
+                case 2:
+                    if(correctValue>0){
+                        hintDisplay.setText("The correct number is positive");
+                    }else{
+                        hintDisplay.setText("The correct number is negative");
+                    }
+                    break;
+                case 3:
+                    hintDisplay.setText(String.format("The correct number is only divisible by itself"));
+                    break;
+            }
+            amtHints--;
+            availableHints.setText(String.format("Hints available: %d",amtHints));
             hintDisplay.setVisibility(View.VISIBLE);
-        }else{
+            count3 = 5;
+        }else if(count>0 && amtHints==0){
+            hintDisplay.setText("No more hints!");
+            hintDisplay.setVisibility(View.VISIBLE);
+            count3 = 5;
+        } else{
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("EXIT", true);
