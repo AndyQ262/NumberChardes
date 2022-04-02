@@ -14,6 +14,8 @@ import java.util.*;
 import org.w3c.dom.Text;
 
 public class PlayArea extends AppCompatActivity {
+    public static final String EXTRA_NUM = "com.example.numbercharades.EXTRA_NUM";
+
     int count = 59;
     int count2 = 5;
     int count3 = 5;
@@ -220,9 +222,10 @@ public class PlayArea extends AppCompatActivity {
                 playAreaButton5.setText(String.valueOf(buttonValueList.get(4)));
                 playAreaButton6.setText(String.valueOf(buttonValueList.get(5)));
             }
-        }else{
-            guess.setText("Game Over");
         }
+        //else{
+            //guess.setText("Game Over");
+        //}
 
     }
 
@@ -293,9 +296,9 @@ public class PlayArea extends AppCompatActivity {
             hintDisplay.setVisibility(View.VISIBLE);
             count3 = 5;
         } else{
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(EXTRA_NUM , score);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("EXIT", true);
             startActivity(intent);
         }
     }
@@ -315,6 +318,8 @@ public class PlayArea extends AppCompatActivity {
         correctIncorrect.setVisibility(View.VISIBLE);
 
     }
+
+
 
 
 
