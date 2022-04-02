@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class HighScore extends AppCompatActivity {
@@ -23,6 +25,8 @@ public class HighScore extends AppCompatActivity {
     private TextView highScore1;
     private TextView highScore2;
     private TextView highScore3;
+
+    private Button menuButton;
 
 
     @Override
@@ -56,6 +60,15 @@ public class HighScore extends AppCompatActivity {
 
         saveData();
 
+        menuButton = (Button) findViewById(R.id.highscoresmenu);
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainMenu();
+            }
+        });
+
     }
 
     public void saveData(){
@@ -77,6 +90,11 @@ public class HighScore extends AppCompatActivity {
         highScoreArray[1] = sharedPreferences.getInt(VAL2, 0);
         highScoreArray[2] = sharedPreferences.getInt(VAL3, 0);
 
-
     }
+
+    public void mainMenu(){
+        Intent intentmainMenu = new Intent(this,MainActivity.class);
+        startActivity(intentmainMenu);
+    }
+
 }
