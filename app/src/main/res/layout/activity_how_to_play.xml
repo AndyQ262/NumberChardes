@@ -6,6 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".HowToPlay">
 
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90sp"
+        android:text="How To Play"
+        android:textSize="27sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView19"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="356dp"
+        android:layout_height="394dp"
+        android:text="A number guessing game where the main objective of the player is to correctly guess a number within a certain domain.\n\nWhen the player opens the game, they will be a menu screen where the player will be able to select the difficulty.\n\nThere are three difficulties: Easy, Medium, and Hard. Easy includes positive and negative integers with 2 options to choose from, medium will have the same positive and negative integers along with 4 buttons and hard will have 6 options to choose from.\n\nYou will have a timer of 60 secs at the start of the game. You will have options (a.k.a buttons) to choose from as your answer. For every correct guess you make, you will gain 5 seconds on your timer, and lose 10 seconds if you incorrectly guess. Your objective is to guess the most amount of numbers correctly before the timer ends.\n\nYou may also get a maximum of three hints in exchange for 5 seconds off your timer per hint.\n\n GOOD LUCK!"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/howtoplaymenu"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="MAIN MENU"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="815dp"
@@ -20,42 +53,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.504"
         app:srcCompat="@drawable/numbers" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
-        android:text="How To Play"
-        android:textColor="@color/material_dynamic_primary60"
-        android:textSize="27sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="356dp"
-        android:layout_height="394dp"
-        android:layout_marginBottom="144dp"
-        android:text="A number guessing game where the main objective of the player is to correctly guess a number within a certain domain.\n\nWhen the player opens the game, they will be a menu screen where the player will be able to select the difficulty.\n\nThere are three difficulties: Easy, Medium, and Hard. Easy includes positive and negative integers with 2 options to choose from, medium will have the same positive and negative integers along with 4 buttons and hard will have 6 options to choose from.\n\nYou will have a timer of 60 secs at the start of the game. You will have options (a.k.a buttons) to choose from as your answer. For every correct guess you make, you will gain 5 seconds on your timer, and lose 10 seconds if you incorrectly guess. Your objective is to guess the most amount of numbers correctly before the timer ends.\n\nYou may also get a maximum of three hints in exchange for 5 seconds off your timer per hint.\n\n GOOD LUCK!"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16"
-        app:layout_constraintVertical_bias="0.606" />
-
-    <Button
-        android:id="@+id/howtoplaymenu"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="MAIN MENU"
-        android:background="@color/material_dynamic_primary70"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
