@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="108dp"
         android:text="How To Play"
+        android:textColor="@color/material_dynamic_primary60"
         android:textSize="27sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
